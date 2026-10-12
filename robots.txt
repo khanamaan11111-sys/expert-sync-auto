@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /listing-prep.html
+Disallow: /review-listing.html
+Sitemap: https://khanamaan11111-sys.github.io/expert-sync-auto/sitemap.xml
