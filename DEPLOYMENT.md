@@ -39,3 +39,7 @@ Open GitHub Actions and inspect the Static site preflight run. If it fails, revi
 The homepage references manifest.webmanifest and registers service-worker.js, with auto-icon.svg as a branded icon. After a successful HTTPS GitHub Pages deployment, check browser install eligibility on Android and desktop. Browser support for SVG-only app icons varies; a PNG icon set may still be needed for consistent installation prompts. Offline support is limited to a small page shell and does not provide offline inventory, live enquiries or full functionality. This is not an Android APK or Play Store release.
 
 A red X on a GitHub commit means a check needs inspection: open Actions, select the failed run, and read the failing job's logs. The preflight checker was adjusted to permit intentionally unindexed utility pages; a passing run and public Pages deployment must still be verified separately.
+
+## Stage 56: offline behaviour
+
+The web app now has offline.html and a versioned service worker. Only a small app shell is cached. If an uncached navigation fails due to a network error, the visitor sees the offline explanation rather than a misleading homepage. Actual HTTP errors, including missing pages, are not converted into successful homepage responses. Inventory JSON, live vehicle availability and WhatsApp enquiries are not offline features. Test by first loading the published site online, then using browser offline mode and opening an uncached page. Refresh the site after deployment so the updated service worker can activate.
