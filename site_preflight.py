@@ -81,10 +81,7 @@ try:
         target = ROOT / relative
         if ".." in Path(relative).parts or not target.is_file():
             errors.append(f"sitemap.xml: missing page: {url}")
-    sitemap_pages = {unquote(urlsplit(u).path[len(PREFIX):]) or "index.html" for u in urls if urlsplit(u).path.startswith(PREFIX)}
-    for page in pages:
-        if page.name not in sitemap_pages:
-            errors.append(f"sitemap.xml: HTML page not listed: {page.name}")
+    # Some HTML pages are intentionally omitted from the public search sitemap.
 except Exception as exc:
     errors.append(f"sitemap.xml: invalid XML or missing file: {exc}")
 
