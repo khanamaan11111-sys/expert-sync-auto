@@ -27,3 +27,9 @@ The planned development stages are committed, but deployment and public browser 
 6. Record actual results in launch-readiness.html and resolve blockers before announcing a public launch.
 
 Search indexing is not guaranteed. This checklist is manual and does not itself deploy the website.
+
+## Stage 51: repository preflight
+
+The repository now includes site_preflight.py and .github/workflows/site-preflight.yml. The workflow is configured for pushes to main, pull requests and manual dispatch. It checks local page references, title and viewport metadata, sitemap URLs, and the listings.json structure using Python's standard library.
+
+Open GitHub Actions and inspect the Static site preflight run. If it fails, review its reported paths, correct the files and rerun. A passing check only confirms these static repository checks; it does not prove that GitHub Pages is deployed, that external services work or that the pages behave correctly in a browser. Complete the manual checks in launch-readiness.html as well.
