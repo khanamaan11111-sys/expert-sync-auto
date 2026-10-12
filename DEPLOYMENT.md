@@ -33,3 +33,9 @@ Search indexing is not guaranteed. This checklist is manual and does not itself 
 The repository now includes site_preflight.py and .github/workflows/site-preflight.yml. The workflow is configured for pushes to main, pull requests and manual dispatch. It checks local page references, title and viewport metadata, sitemap URLs, and the listings.json structure using Python's standard library.
 
 Open GitHub Actions and inspect the Static site preflight run. If it fails, review its reported paths, correct the files and rerun. A passing check only confirms these static repository checks; it does not prove that GitHub Pages is deployed, that external services work or that the pages behave correctly in a browser. Complete the manual checks in launch-readiness.html as well.
+
+## Stage 53: installable web-app foundation
+
+The homepage references manifest.webmanifest and registers service-worker.js, with auto-icon.svg as a branded icon. After a successful HTTPS GitHub Pages deployment, check browser install eligibility on Android and desktop. Browser support for SVG-only app icons varies; a PNG icon set may still be needed for consistent installation prompts. Offline support is limited to a small page shell and does not provide offline inventory, live enquiries or full functionality. This is not an Android APK or Play Store release.
+
+A red X on a GitHub commit means a check needs inspection: open Actions, select the failed run, and read the failing job's logs. The preflight checker was adjusted to permit intentionally unindexed utility pages; a passing run and public Pages deployment must still be verified separately.
