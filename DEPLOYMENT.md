@@ -43,3 +43,8 @@ A red X on a GitHub commit means a check needs inspection: open Actions, select 
 ## Stage 56: offline behaviour
 
 The web app now has offline.html and a versioned service worker. Only a small app shell is cached. If an uncached navigation fails due to a network error, the visitor sees the offline explanation rather than a misleading homepage. Actual HTTP errors, including missing pages, are not converted into successful homepage responses. Inventory JSON, live vehicle availability and WhatsApp enquiries are not offline features. Test by first loading the published site online, then using browser offline mode and opening an uncached page. Refresh the site after deployment so the updated service worker can activate.
+
+
+## Stage 74: expanded launch safety gate
+
+The automated preflight now also checks essential customer-journey pages, homepage/seller/tools navigation to key resources, duplicate/nonempty listing IDs, and explicit seller permission plus manual review flags on any listing marked published. The workflow runs on main pushes and pull requests. Inspect the latest GitHub Actions result before release; a successful commit alone does not establish that the checks passed or that GitHub Pages is live. Follow up with a manual mobile/desktop smoke test and confirm no invented or unapproved inventory is displayed.
