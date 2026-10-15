@@ -96,7 +96,47 @@ try:
 except Exception as exc:
     errors.append(f"listings.json: invalid JSON or missing file: {exc}")
 
-print(f"Checked {checked} HTML pages, local links, sitemap and inventory JSON.")
+# Stage 74: guard critical customer journeys and the published listing contract.
+critical_pages = {
+    "index.html", "cars.html", "inventory.html", "vehicle.html",
+    "sell.html", "tools.html", "privacy.html", "help.html",
+    "seller-readiness.html", "vehicle-photo-guide.html", "listing-prep.html",
+    "site-health.html", "launch-readiness.html",
+}
+for name in sorted(critical_pages):
+    if not (ROOT / name).is_file():
+        errors.append(f"critical journey: missing {name}")
+
+for source, required in {
+    "index.html": ("cars.html", "sell.html", "tools.html"),
+    "sell.html": ("seller-readiness.html", "vehicle-photo-guide.html", "listing-prep.html"),
+    "tools.html": ("seller-readiness.html", "insurance-compare.html", "five-year-budget.html", "emergency-kit.html"),
+}.items():
+    file = ROOT / source
+    if file.is_file():
+        html = file.read_text(encoding="utf-8")
+        for target in required:
+            if f'href="{target}"' not in html and f"href='{target}'" not in html:
+                errors.append(f"critical journey: {source} must link to {target}")
+
+# Listing data is public. A vehicle may only be exposed when explicit review
+# and seller permission flags are both present and true.
+if "inventory" in locals() and isinstance(inventory, dict) and isinstance(inventory.get("listings"), list):
+    seen_ids = set()
+    for i, item in enumerate(inventory["listings"]):
+        if not isinstance(item, dict):
+            continue
+        listing_id = item.get("id")
+        if not isinstance(listing_id, str) or not listing_id.strip():
+            errors.append(f"listings.json: item {i} needs a nonempty string id")
+        elif listing_id in seen_ids:
+            errors.append(f"listings.json: duplicate id {listing_id}")
+        else:
+            seen_ids.add(listing_id)
+        if item.get("published") is True and (item.get("sellerPermissionConfirmed") is not True or item.get("detailsReviewed") is not True):
+            errors.append(f"listings.json: item {i} published without both permission and review flags")
+
+print(f"Checked {checked} HTML pages, local links, sitemap, inventory JSON and critical journeys.")
 if errors:
     print(f"FAIL: {len(errors)} issue(s):")
     for issue in errors:
