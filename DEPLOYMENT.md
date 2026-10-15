@@ -48,3 +48,8 @@ The web app now has offline.html and a versioned service worker. Only a small ap
 ## Stage 74: expanded launch safety gate
 
 The automated preflight now also checks essential customer-journey pages, homepage/seller/tools navigation to key resources, duplicate/nonempty listing IDs, and explicit seller permission plus manual review flags on any listing marked published. The workflow runs on main pushes and pull requests. Inspect the latest GitHub Actions result before release; a successful commit alone does not establish that the checks passed or that GitHub Pages is live. Follow up with a manual mobile/desktop smoke test and confirm no invented or unapproved inventory is displayed.
+
+
+## Stage 75 milestone sign-off
+
+The 75-stage development milestone has been committed. Inspect the latest Static site preflight workflow and GitHub Pages deployment for the intended commit. Then use launch-readiness.html to manually test mobile and desktop navigation, seller enquiry preparation links, Stage 67–71 tools, printing, validation, and the empty inventory disclosure. Record and fix blockers before calling the public release verified. A committed checklist does not mean these checks have passed.
